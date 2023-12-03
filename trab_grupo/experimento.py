@@ -43,7 +43,7 @@ def votante(conn_vc, conn_vr, num_voters):
     # Configuração 2 onde o vetor votes guarda os votos, assim podemos ver o votos e mudar para ver o resultado final
     if(config == 2):
         
-        print("\n Vetor de votos:")
+        print("\n Mensagem do votante: Vetor de votos:")
         votes = ['a', 'a', 'a', 'a', 'b', 'a', 'a', 'a', 'a', 'b']
         print(votes)
         print('')
@@ -58,7 +58,7 @@ def votante(conn_vc, conn_vr, num_voters):
             if(vote == "b"):
                 conn_vc.send(public_key.encrypt(1 << 8))
             
-            print("Voto " + str(i) + " enviado.\n")
+            print("Mensagem do Votante: Voto " + str(i) + " enviado.\n")
     
     
     conn_vr.close()
@@ -74,7 +74,7 @@ def contador(conn_cv, conn_cr, num_voters):
         temp = conn_cv.recv()
         
         resultado_crypt = resultado_crypt + temp
-        print("Voto " + str(i) + " recebido. O texto do voto: " + str(temp.ciphertext()))
+        print("Mensagem do contador: Voto " + str(i) + " recebido. O texto do voto: " + str(temp.ciphertext()))
         print('')
         pass
     conn_cr.send(resultado_crypt)
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     # Aqui geramos as duas chaves da criptografia, a publica e a privada. Podemos escolher o tamanho das chaves mudando o segundo argumento
     # da função generate_paillier_keypair
     public_key, private_key = paillier.generate_paillier_keypair(None , 128)
-    print("Chave publica gerada:")
+    print("Mensagem do resposável: Chave publica gerada:")
     print(public_key)
 
     # Aqui estamos criando pipes para fazer a comunicação entre os processos onde a primeira letra apos o conn diz de qual processo sai a mensagem e a segunda
@@ -116,9 +116,9 @@ if __name__ == '__main__':
     votos_a = resultado - (votos_b << 8)
 
     # Mostra o valores de votos
-    print("Votos para A:")
+    print("Mensagem do responsável: Votos para A:")
     print(votos_a)
-    print("Votos para B:")
+    print("Mensagem do responsável: Votos para B:")
     print(votos_b)
     
     
